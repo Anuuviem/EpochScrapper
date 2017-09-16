@@ -1,4 +1,4 @@
-private["_vehName","_vehClass","_inventory","_obj","_objectID","_objectUID"];
+private["_vehName","_vehClass","_inventory","_obj","_objectID","_objectUID","_chopShopClasses","_maxDistance"];
 
 _vehName = _this select 3;
 _vehClass = typeOf _vehName;
@@ -7,6 +7,9 @@ _inventory = items player;
 _obj = _vehName;
 _objectID = _obj getVariable["ObjectID","0"];
 _objectUID = _obj getVariable["ObjectUID","0"];
+
+_chopShopClasses = ["Land_repair_center"]; //list of classes that you must be near in order to scrap a vehicle
+_maxDistance = 50; //keeping it relatively close, id love yo make you park it in a shop but that wouldnt work so well fo airplanes and helicopters....
 
 _fn_del_vehicle = {
   PVDZ_obj_Destroy = [_objectID,_objectUID,(name player)];
@@ -19,10 +22,17 @@ _fn_del_vehicle = {
 
 if !(("ItemToolbox" in _inventory) && ("ItemCrowbar" in _inventory)) exitWith {
   systemChat ("You need tools to do any work!");
+  
+};
+
+_chopShops = (nearestObjects [getPosATL _vehName,_chopShopClasses,_maxDistance]);
+
+if !(count _chopShops > 0) exitWith {
+  systemChat ("You can't just tear down a whole vehicle out in the open, get to a Chop Shop!");
 };
 
 if (_vehClass in VRcycles) then {
-  _chance = random 39;
+  _chance = random 100;
   if (_chance >= 40) then {
     ExecVM "scripts\scrapper\cycleScrap.sqf";
     call _fn_del_vehicle;
@@ -36,7 +46,7 @@ if (_vehClass in VRcycles) then {
   };
 };
 if (_vehClass in VRquads) then {
-  _chance = random 39;
+  _chance = random 100;
   if (_chance >= 40) then {
     ExecVM "scripts\scrapper\quadScrap.sqf";
     call _fn_del_vehicle;
@@ -50,7 +60,7 @@ if (_vehClass in VRquads) then {
   };
 };
 if (_vehClass in VRcars) then {
-  _chance = random 39;
+  _chance = random 100;
   if (_chance >= 40) then {
     ExecVM "scripts\scrapper\carScrap.sqf";
     call _fn_del_vehicle;
