@@ -1,0 +1,1 @@
+Start scrapping entire vehicles, tired of hunting warehouse to warehouse, construction complex to complex? Fear no more, you can salvage tires and windows but not fuel tank parts or engine parts? This changes that!
