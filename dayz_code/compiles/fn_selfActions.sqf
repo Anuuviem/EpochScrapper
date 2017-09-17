@@ -1,5 +1,5 @@
 	//VR's Scraptastic script
-  if ((_typeOfCursorTarget in VRtargets) && (_isAlive) && (!_isLocked) && (!_inVehicle)) then { //hopefully !_inVehicle will prevent scrapping while vehicle is occupied by anyone
+  if ((_typeOfCursorTarget in VRtargets) && (_isAlive) && (!_isLocked)) then {
     _typeOfCursorTarget = _cursorTarget;
     if (s_scrap_dat < 0) then {
       s_scrap_dat = player addAction [("<t color=""#FF0000"">"+("Scrap It") + "</t>"),"scripts\scrapper\scraptastic.sqf",_cursorTarget, 0, true, true];
