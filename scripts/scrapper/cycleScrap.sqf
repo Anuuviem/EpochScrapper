@@ -1,4 +1,4 @@
-private["_dir","_pos","_spawnCrate","_randFlip","_randLow","_randMid","_player"];
+private["_dir","_pos","_spawnCrate","_randFlip","_randLow","_randMid","_player","_type"];
 
 //array to fill because of stupid workaround
 _VRCycleParts = [["PartGeneric","1"],["PartWheel","1"],["PartEngine","1"],["PartFueltank","1"]];
@@ -14,6 +14,8 @@ _VRCycleParts select 2 set [1,_randFlip];
 _VRCycleParts select 3 set [1,_randFlip];
 
 _player = player;
+
+_type = _this select 0;
 
 // Name of this crate
 _crateName = "Scrap Crate";

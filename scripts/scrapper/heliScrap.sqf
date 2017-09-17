@@ -1,7 +1,7 @@
-private["_dir","_pos","_spawnCrate","_randFlip","_randLow","_randMid","_player"];
+private["_dir","_pos","_spawnCrate","_randFlip","_randLow","_randMid","_player","_type"];
 
 // array to fill because of stupid workaround
-_VRHeliParts = [["PartGeneric","1"],["PartEngine","1"],["PartFueltank","1"],["PartVRotor","1"];
+_VRHeliParts = [["PartGeneric","1"],["PartEngine","1"],["PartFueltank","1"],["PartVRotor","1"]];
 
 //containers for our random vars so we can insert into an array as whole figure for that effin workaround
 _ranFlip = floor(random 2);
@@ -15,6 +15,8 @@ _VRHeliParts select 2 set [1,_randLow];
 _VRHeliParts select 3 set [1,_randFlip];
 
 _player = player;
+
+_type = _this select 0;
 
 // Name of this crate
 _crateName = "Scrap Crate";

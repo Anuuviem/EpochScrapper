@@ -1,4 +1,4 @@
-private["_vehName","_vehClass","_inventory","_obj","_objectID","_objectUID","_chopShopClasses","_maxDistance"];
+private["_vehName","_vehClass","_inventory","_obj","_objectID","_objectUID","_chopShopClasses","_maxDistance","_toolBreak"];
 
 _vehName = _this select 3;
 _vehClass = typeOf _vehName;
@@ -23,177 +23,163 @@ _fn_del_vehicle = { //this is not my function, i personally tried to reference i
 
 //should cancel action if vehicle is occupied
 if ((count (crew _vehName)) != 0) exitWith { //I have no players or friendly AI to test this with ATM. Please confirm working or no
-  systemChat "You can't scrap a vehicle while it is occupied!";
+  systemChat("You can't scrap a vehicle while it is occupied!");
 };
 
 if !(("ItemToolbox" in _inventory) && ("ItemCrowbar" in _inventory)) exitWith {
-  systemChat ("You need tools to do any work!");
+  systemChat("You need tools to do any work!");
 };
 
 if !(count _chopShops > 0) exitWith {
-  systemChat ("You can't just tear down a whole vehicle out in the open, get to a Chop Shop!");
+  systemChat("You can't just tear down a whole vehicle out in the open, get to a Chop Shop!");
 };
+
+_toolBreak = random 100;
 
 if (_vehClass in VRcycles) then {
   _chance = random 100;
   if (_chance >= 40) then {
-    ExecVM "scripts\scrapper\cycleScrap.sqf";
+    [_vehClass] ExecVM "scripts\scrapper\cycleScrap.sqf";
     call _fn_del_vehicle;
-    systemChat "Successfully scrapped vehicle, usable parts are in that crate!";
+    systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
     _damage = getDammage _vehClass;
     _damaged = (_damage + 0.2);
     vehicle _vehClass setDamage _damaged;
     _damage2 = getDammage _vehClass;
-    systemChat "Be careful! You just damaged your vehicle!";
+    systemChat("Be careful! You just damaged your vehicle!");
   };
 };
 
 if (_vehClass in VRquads) then {
   _chance = random 100;
   if (_chance >= 40) then {
-    ExecVM "scripts\scrapper\quadScrap.sqf";
+    [_vehClass] ExecVM "scripts\scrapper\quadScrap.sqf";
     call _fn_del_vehicle;
-    systemChat "Successfully scrapped vehicle, usable parts are in that crate!";
+    systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
     _damage = getDammage _vehClass;
     _damaged = (_damage + 0.2);
     vehicle _vehClass setDamage _damaged;
     _damage2 = getDammage _vehClass;
-    systemChat "Be careful! You just damaged your vehicle!";
+    systemChat("Be careful! You just damaged your vehicle!");
   };
 };
 
 if (_vehClass in VRcars) then {
   _chance = random 100;
   if (_chance >= 40) then {
-    ExecVM "scripts\scrapper\carScrap.sqf";
+    [_vehClass] ExecVM "scripts\scrapper\carScrap.sqf";
     call _fn_del_vehicle;
-    systemChat "Successfully scrapped vehicle, usable parts are in that crate!";
+    systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehName;
+    _damage = getDammage _vehClass;
     _damaged = (_damage + 0.2);
-    vehicle _vehName setDamage _damaged;
-    _damage2 = getDammage _vehName;
-    //_vehicle setDamage [(_damaged), false];
-    //_vehicle setDamage ((_damaged), false);
-    systemChat "Be careful! You just damaged your vehicle!";
+    vehicle _vehClass setDamage _damaged;
+    _damage2 = getDammage _vehClass;
+    systemChat("Be careful! You just damaged your vehicle!");
   };
 };
 
 if (_vehClass in VRtrucks) then {
   _chance = random 100;
   if (_chance >= 40) then {
-    ExecVM "scripts\scrapper\truckScrap.sqf";
+    [_vehClass] ExecVM "scripts\scrapper\truckScrap.sqf";
     call _fn_del_vehicle;
-    systemChat "Successfully scrapped vehicle, usable parts are in that crate!";
+    systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehName;
+    _damage = getDammage _vehClass;
     _damaged = (_damage + 0.2);
-    vehicle _vehName setDamage _damaged;
-    _damage2 = getDammage _vehName;
-    //_vehicle setDamage [(_damaged), false];
-    //_vehicle setDamage ((_damaged), false);
-    systemChat "Be careful! You just damaged your vehicle!";
+    vehicle _vehClass setDamage _damaged;
+    _damage2 = getDammage _vehClass;
+    systemChat("Be careful! You just damaged your vehicle!");
   };
 };
 
 if (_vehClass in VRapcs) then {
   _chance = random 100;
   if (_chance >= 40) then {
-    ExecVM "scripts\scrapper\apcScrap.sqf";
+    [_vehClass] ExecVM "scripts\scrapper\apcScrap.sqf";
     call _fn_del_vehicle;
-    systemChat "Successfully scrapped vehicle, usable parts are in that crate!";
+    systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehName;
+    _damage = getDammage _vehClass;
     _damaged = (_damage + 0.2);
-    vehicle _vehName setDamage _damaged;
-    _damage2 = getDammage _vehName;
-    //_vehicle setDamage [(_damaged), false];
-    //_vehicle setDamage ((_damaged), false);
-    systemChat "Be careful! You just damaged your vehicle!";
+    vehicle _vehClass setDamage _damaged;
+    _damage2 = getDammage _vehClass;
+    systemChat("Be careful! You just damaged your vehicle!");
   };
 };
 
 if (_vehClass in VRapvs) then {
   _chance = random 100;
   if (_chance >= 40) then {
-    ExecVM "scripts\scrapper\apvScrap.sqf";
+    [_vehClass] ExecVM "scripts\scrapper\apvScrap.sqf";
     call _fn_del_vehicle;
-    systemChat "Successfully scrapped vehicle, usable parts are in that crate!";
+    systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehName;
+    _damage = getDammage _vehClass;
     _damaged = (_damage + 0.2);
-    vehicle _vehName setDamage _damaged;
-    _damage2 = getDammage _vehName;
-    //_vehicle setDamage [(_damaged), false];
-    //_vehicle setDamage ((_damaged), false);
-    systemChat "Be careful! You just damaged your vehicle!";
+    vehicle _vehClass setDamage _damaged;
+    _damage2 = getDammage _vehClass;
+    systemChat("Be careful! You just damaged your vehicle!");
   };
 };
 
 if (_vehClass in VRtanks) then {
   _chance = random 100;
   if (_chance >= 40) then {
-    ExecVM "scripts\scrapper\tankScrap.sqf";
+    [_vehClass] ExecVM "scripts\scrapper\tankScrap.sqf";
     call _fn_del_vehicle;
-    systemChat "Successfully scrapped vehicle, usable parts are in that crate!";
+    systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehName;
+    _damage = getDammage _vehClass;
     _damaged = (_damage + 0.2);
-    vehicle _vehName setDamage _damaged;
-    _damage2 = getDammage _vehName;
-    //_vehicle setDamage [(_damaged), false];
-    //_vehicle setDamage ((_damaged), false);
-    systemChat "Be careful! You just damaged your vehicle!";
+    vehicle _vehClass setDamage _damaged;
+    _damage2 = getDammage _vehClass;
+    systemChat("Be careful! You just damaged your vehicle!");
   };
 };
 
 if (_vehClass in VRhelos) then {
   _chance = random 100;
   if (_chance >= 40) then {
-    ExecVM "scripts\scrapper\heliScrap.sqf";
+    [_vehClass] ExecVM "scripts\scrapper\heliScrap.sqf";
     call _fn_del_vehicle;
-    systemChat "Successfully scrapped vehicle, usable parts are in that crate!";
+    systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehName;
+    _damage = getDammage _vehClass;
     _damaged = (_damage + 0.2);
-    vehicle _vehName setDamage _damaged;
-    _damage2 = getDammage _vehName;
-    //_vehicle setDamage [(_damaged), false];
-    //_vehicle setDamage ((_damaged), false);
-    systemChat "Be careful! You just damaged your vehicle!";
+    vehicle _vehClass setDamage _damaged;
+    _damage2 = getDammage _vehClass;
+    systemChat("Be careful! You just damaged your vehicle!");
   };
 };
 
 if (_vehClass in VRplanes) then {
-  _c130 = "C130J_US_EP1_DZ";
-  _osprey = "MV22_DZ";
   _chance = random 100;
   if (_chance >= 40) then {
-    if ((_vehClass != _c130) && (_vehClass != _osprey)) then {
-      ExecVM "scripts\scrapper\planeScrap.sqf";
-      call _fn_del_vehicle;
-      systemChat "Successfully scrapped vehicle, usable parts are in that crate!";
-    } else {
-      if (_vehClass = _c130) then {
-        ExecVM "scripts\scrapper\planeScrap.sqf";
-        call _fn_del_vehicle;
-        systemChat "Successfully scrapped vehicle, usable parts are in that crate!";
-      };
-      if (_vehClass = _osprey) then {
-        ExecVM "scripts\scrapper\planeScrap.sqf";
-        call _fn_del_vehicle;
-        systemChat "Successfully scrapped vehicle, usable parts are in that crate!";
-      };
-    };
+    [_vehClass] ExecVM "scripts\scrapper\planeScrap.sqf";
+    call _fn_del_vehicle;
+    systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
     _damage = getDammage _vehName;
     _damaged = (_damage + 0.2);
     vehicle _vehName setDamage _damaged;
     _damage2 = getDammage _vehName;
-    //_vehicle setDamage [(_damaged), false];
-    //_vehicle setDamage ((_damaged), false);
-    systemChat "Be careful! You just damaged your vehicle!";
+    systemChat("Be careful! You just damaged your vehicle!");
+  };
+};
+
+if (_toolBreak < 10) then {
+_chance = random 10;
+_toolBox = "ItemToolbox";
+_crowBar = "ItemCrowbar";
+  if ( _chance > 5) then {
+    player removeWeapon _toolBox;
+    systemChat("You broke too many tools from your toolbox getting this job done!");
+  } else {
+    player removeWeapon _crowBar;
+    systemChat("You broke your crowbar getting this job done!");
   };
 };

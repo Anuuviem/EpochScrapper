@@ -1,7 +1,7 @@
 private["_dir","_pos","_spawnCrate","_randFlip","_randLow","_randMid","_player","_type"];
 
 // array to fill because of stupid workaround
-_VRTruckParts = [["PartGeneric","1"],["PartEngine","1"],["PartFueltank","1"],["PartVRotor","0"];
+_VRTruckParts = [["PartGeneric","1"],["PartEngine","1"],["PartFueltank","1"],["PartVRotor","0"]];
 
 //containers for our random vars so we can insert into an array as whole figure for that effin workaround
 _randFlip = floor(random 2);
@@ -32,7 +32,9 @@ _spawnCrate = _classname createVehicleLocal _pos;
 _spawnCrate setDir _dir;
 _spawnCrate setposATL _pos;
 
-_type = _this select 0; //in theory this should be the classname of the _vehClass that triggered this script to execute. Using it to determine if osprey or c130
+_type = _this select 0;
+_c130 = "C130J_US_EP1_DZ";
+_osprey = "MV22_DZ";
 
 //clear crate before filling it
 clearWeaponCargoGlobal _spawnCrate;
@@ -40,13 +42,13 @@ clearMagazineCargoGlobal _spawnCrate;
 clearBackpackCargoGlobal _spawnCrate;
 
 //fill it with this crap. freaking workaround looks terribly ugly and prolly slow as crap but wont populate if structured ["PartGeneric", (0 + floor(random 3))];
-if (_type = "C130J_US_EP1_DZ") then {
+if (_type == _c130) then {
   _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 0) select 0, (((_VRTruckParts select 0) select 1) + 10)]; //give c130's a massive amount of scrap metal
 } else {
   _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 0) select 0, (_VRTruckParts select 0) select 1];
-  };
+};
 _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 1) select 0, (_VRTruckParts select 1) select 1];
 _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 2) select 0, (_VRTruckParts select 2) select 1];
-if (_type = "MV22_DZ") then {
+if (_type == _osprey) then {
   _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 3) select 0, (_VRTruckParts select 2) select 1];
 };

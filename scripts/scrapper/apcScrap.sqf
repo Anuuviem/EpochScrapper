@@ -1,11 +1,11 @@
-private["_dir","_pos","_spawnCrate","_randFlip","_randLow","_randMid","_player"];
+private["_dir","_pos","_spawnCrate","_randFlip","_randLow","_randMid","_player","_type"];
 
 // array to fill because of stupid workaround
 _VRApcParts = [["PartGeneric","1"],["PartWheel","1"],["PartEngine","1"],["PartFueltank","1"],["PartGlass","1"]];
 
 //containers for our random vars so we can insert into an array as whole figure for that effin workaround
 _randFlip = floor((random 5)/2);
-_randLow = floor(random 6);
+_randLow = floor(random 8);
 _randMid = floor(random 10);
 
 //setting the number of each part to add
@@ -16,6 +16,8 @@ _VRApcParts select 3 set [1,_randFlip];
 _VRApcParts select 4 set [1,(_randFlip + 1)];
 
 _player = player;
+
+_type = _this select 0;
 
 // Name of this crate
 _crateName = "Scrap Crate";
