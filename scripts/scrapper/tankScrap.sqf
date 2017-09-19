@@ -42,3 +42,5 @@ clearBackpackCargoGlobal _spawnCrate;
 _spawnCrate addMagazineCargoGlobal [(_VRTankParts select 0) select 0, (_VRTankParts select 0) select 1];
 _spawnCrate addMagazineCargoGlobal [(_VRTankParts select 1) select 0, (_VRTankParts select 1) select 1];
 _spawnCrate addMagazineCargoGlobal [(_VRTankParts select 2) select 0, (_VRTankParts select 2) select 1];
+
+diag_log format["[SCRAPPER] %1 just scrapped %2, at location %3!",_player,_type,_pos];

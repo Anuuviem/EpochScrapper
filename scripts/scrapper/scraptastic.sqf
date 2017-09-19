@@ -1,16 +1,16 @@
-private["_vehName","_vehClass","_inventory","_obj","_objectID","_objectUID","_chopShopClasses","_maxDistance","_toolBreak"];
+private["_vehicle","_vehClass","_inventory","_obj","_objectID","_objectUID","_chopShopClasses","_maxDistance","_toolBreak"];
 
-_vehName = _this select 3;
-_vehClass = typeOf _vehName;
+_vehicle = _this select 3;
+_vehClass = typeOf _vehicle;
 _inventory = items player;
 
-_obj = _vehName;
-_objectID = _obj getVariable["ObjectID","0"];
-_objectUID = _obj getVariable["ObjectUID","0"];
+_obj = _vehicle;
+_objectID = _vehicle getVariable["ObjectID","0"];
+_objectUID = _vehicle getVariable["ObjectUID","0"];
 
 _chopShopClasses = ["Land_repair_center"]; //list of classes that you must be near in order to scrap a vehicle
 _maxDistance = 50; //keeping it relatively close, id love yo make you park it in a shop but that wouldnt work so well fo airplanes and helicopters....
-_chopShops = (nearestObjects [getPosATL _vehName,_chopShopClasses,_maxDistance]);
+_chopShops = (nearestObjects [getPosATL _vehicle,_chopShopClasses,_maxDistance]);
 
 _fn_del_vehicle = { //this is not my function, i personally tried to reference it from AdminTools but I could not get it to work
   PVDZ_obj_Destroy = [_objectID,_objectUID,(name player)]; //all credit for this function goes to noxSicarious/JasonTM
@@ -18,11 +18,22 @@ _fn_del_vehicle = { //this is not my function, i personally tried to reference i
   if (isServer) then {
     PVDZ_obj_Destroy call server_deleteObj;
   };
-  deletevehicle _obj;
+  deletevehicle _vehicle;
+};
+
+_fn_dmg_veh = {
+    _hitpoints = _vehicle call vehicle_getHitpoints;
+    {
+      _damage = [_vehicle,_x] call object_getHit;
+      _selection = getText(configFile >> "cfgVehicles" >> _vehClass >> "HitPoints" >> _x >> "name");
+      [_vehicle,_selection,(_damage + 0.2)] call fnc_veh_handleDam;
+    } forEach _hitpoints;
+    PVDZ_veh_Save = [_vehicle,"damage"];
+    publicVariableServer "PVDZ_veh_Save";
 };
 
 //should cancel action if vehicle is occupied
-if ((count (crew _vehName)) != 0) exitWith { //I have no players or friendly AI to test this with ATM. Please confirm working or no
+if ((count (crew _vehicle)) != 0) exitWith { //I have no players or friendly AI to test this with ATM. Please confirm working or no
   systemChat("You can't scrap a vehicle while it is occupied!");
 };
 
@@ -43,10 +54,7 @@ if (_vehClass in VRcycles) then {
     call _fn_del_vehicle;
     systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehClass;
-    _damaged = (_damage + 0.2);
-    vehicle _vehClass setDamage _damaged;
-    _damage2 = getDammage _vehClass;
+    call _fn_dmg_veh;
     systemChat("Be careful! You just damaged your vehicle!");
   };
 };
@@ -58,10 +66,7 @@ if (_vehClass in VRquads) then {
     call _fn_del_vehicle;
     systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehClass;
-    _damaged = (_damage + 0.2);
-    vehicle _vehClass setDamage _damaged;
-    _damage2 = getDammage _vehClass;
+    call _fn_dmg_veh;
     systemChat("Be careful! You just damaged your vehicle!");
   };
 };
@@ -73,10 +78,7 @@ if (_vehClass in VRcars) then {
     call _fn_del_vehicle;
     systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehClass;
-    _damaged = (_damage + 0.2);
-    vehicle _vehClass setDamage _damaged;
-    _damage2 = getDammage _vehClass;
+    call _fn_dmg_veh;
     systemChat("Be careful! You just damaged your vehicle!");
   };
 };
@@ -88,10 +90,7 @@ if (_vehClass in VRtrucks) then {
     call _fn_del_vehicle;
     systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehClass;
-    _damaged = (_damage + 0.2);
-    vehicle _vehClass setDamage _damaged;
-    _damage2 = getDammage _vehClass;
+    call _fn_dmg_veh;
     systemChat("Be careful! You just damaged your vehicle!");
   };
 };
@@ -103,10 +102,7 @@ if (_vehClass in VRapcs) then {
     call _fn_del_vehicle;
     systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehClass;
-    _damaged = (_damage + 0.2);
-    vehicle _vehClass setDamage _damaged;
-    _damage2 = getDammage _vehClass;
+    call _fn_dmg_veh;
     systemChat("Be careful! You just damaged your vehicle!");
   };
 };
@@ -118,10 +114,7 @@ if (_vehClass in VRapvs) then {
     call _fn_del_vehicle;
     systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehClass;
-    _damaged = (_damage + 0.2);
-    vehicle _vehClass setDamage _damaged;
-    _damage2 = getDammage _vehClass;
+    call _fn_dmg_veh;
     systemChat("Be careful! You just damaged your vehicle!");
   };
 };
@@ -133,10 +126,7 @@ if (_vehClass in VRtanks) then {
     call _fn_del_vehicle;
     systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehClass;
-    _damaged = (_damage + 0.2);
-    vehicle _vehClass setDamage _damaged;
-    _damage2 = getDammage _vehClass;
+    call _fn_dmg_veh;
     systemChat("Be careful! You just damaged your vehicle!");
   };
 };
@@ -148,10 +138,7 @@ if (_vehClass in VRhelos) then {
     call _fn_del_vehicle;
     systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehClass;
-    _damaged = (_damage + 0.2);
-    vehicle _vehClass setDamage _damaged;
-    _damage2 = getDammage _vehClass;
+    call _fn_dmg_veh;
     systemChat("Be careful! You just damaged your vehicle!");
   };
 };
@@ -163,10 +150,10 @@ if (_vehClass in VRplanes) then {
     call _fn_del_vehicle;
     systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
   } else {
-    _damage = getDammage _vehName;
+    _damage = getDammage _vehicle;
     _damaged = (_damage + 0.2);
-    vehicle _vehName setDamage _damaged;
-    _damage2 = getDammage _vehName;
+    vehicle _vehicle setDamage _damaged;
+    _damage2 = getDammage _vehicle;
     systemChat("Be careful! You just damaged your vehicle!");
   };
 };

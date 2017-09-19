@@ -47,3 +47,5 @@ _spawnCrate addMagazineCargoGlobal [(_VRCarParts select 1) select 0, (_VRCarPart
 _spawnCrate addMagazineCargoGlobal [(_VRCarParts select 2) select 0, (_VRCarParts select 2) select 1];
 _spawnCrate addMagazineCargoGlobal [(_VRCarParts select 3) select 0, (_VRCarParts select 3) select 1];
 _spawnCrate addMagazineCargoGlobal [(_VRCarParts select 4) select 0, (_VRCarParts select 4) select 1];
+
+diag_log format["[SCRAPPER] %1 just scrapped %2, at location %3!",_player,_type,_pos];

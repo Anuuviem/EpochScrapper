@@ -42,13 +42,17 @@ clearMagazineCargoGlobal _spawnCrate;
 clearBackpackCargoGlobal _spawnCrate;
 
 //fill it with this crap. freaking workaround looks terribly ugly and prolly slow as crap but wont populate if structured ["PartGeneric", (0 + floor(random 3))];
-if (_type == _c130) then {
-  _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 0) select 0, (((_VRTruckParts select 0) select 1) + 10)]; //give c130's a massive amount of scrap metal
+if (_type == _c130) then { //give c130's a massive amount of scrap metal and more engine/fueltank parts
+  _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 0) select 0, (((_VRTruckParts select 0) select 1) + 10)];
+  _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 1) select 0, (((_VRTruckParts select 1) select 1) + 2)];
+  _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 2) select 0, (((_VRTruckParts select 2) select 1) + 2)];
 } else {
   _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 0) select 0, (_VRTruckParts select 0) select 1];
+  _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 1) select 0, (_VRTruckParts select 1) select 1];
+  _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 2) select 0, (_VRTruckParts select 2) select 1];
 };
-_spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 1) select 0, (_VRTruckParts select 1) select 1];
-_spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 2) select 0, (_VRTruckParts select 2) select 1];
 if (_type == _osprey) then {
   _spawnCrate addMagazineCargoGlobal [(_VRTruckParts select 3) select 0, (_VRTruckParts select 2) select 1];
 };
+
+diag_log format["[SCRAPPER] %1 just scrapped %2, at location %3!",_player,_type,_pos];
