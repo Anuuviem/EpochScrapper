@@ -126,9 +126,6 @@ while {_isOk} do {
     if (r_interrupt || (player getVariable["inCombat",false])) then {
         r_doLoop = false;
     };
-    if (DZE_cancelBuilding) exitWith {
-        r_doLoop = false;
-    };
     sleep 0.1;
   };
   r_doLoop = false;
