@@ -108,10 +108,7 @@ while {_isOk} do {
   _started = false;
   _finished = false;
 
-  //should cancel action if vehicle is occupied
-  if ((count (crew _vehicle)) != 0) exitWith { //I have no players or friendly AI to test this with ATM. Please confirm working or no
-    systemChat("You can't scrap a vehicle while it is occupied!");
-  };
+  if ((count (crew _vehicle)) != 0) exitWith {systemChat("You can't scrap a vehicle while it is occupied!");_isOk = false;};
   
   while {r_doLoop} do {
     _animState = animationState player;
@@ -123,8 +120,13 @@ while {_isOk} do {
         r_doLoop = false;
         _finished = true;
     };
-    if (r_interrupt || (player getVariable["inCombat",false])) then {
+    if (r_interrupt || (player getVariable["inCombat",false])) exitWith {
         r_doLoop = false;
+        _isOk = false;
+    };
+    if (DZE_cancelBuilding) exitWith {
+      r_doLoop = false;
+      _isOk = false;
     };
     sleep 0.1;
   };
