@@ -1,5 +1,5 @@
 private ["_part","_hitpoints","_isBicycle","_isATV","_is6WheelType","_is8WheelType","_HasNoGlassKind","_hitpoint",
-"_6WheelTypeArray","_8WheelTypeArray","_NoGlassArray","_NoExtraWheelsArray","_nullPartsArray","_toSpawnArray","_RemovedPartsArray","_damage","_configVeh","_type"];
+"_6WheelTypeArray","_8WheelTypeArray","_NoGlassArray","_NoExtraWheelsArray","_nullPartsArray","_RemovedPartsArray","_damage","_configVeh","_type"];
 
 _vehicle = _this;
 
@@ -27,7 +27,6 @@ _hitpoints = _hitpoints - [_NoExtraWheelsArray,_TooMuchGlassArray];
 _toSpawnArray = ["PartGeneric"];
 
 if !(isNil "_hitpoints") then { //verifies we have initialized a vehicle, then removes some of the excess crap
-  diag_log "[SCRAPPER][Init] Object get parts array!";
   if !(_is6WheelType || _is8WheelType) then {
     _RemovedPartsArray = ["HitLF2Wheel","HitRF2Wheel","HitLMWheel","HitRMWheel"];
   } else {
@@ -78,4 +77,4 @@ if !(isNil "_hitpoints") then { //verifies we have initialized a vehicle, then r
 	};
 } forEach _hitpoints;
 
-null = [_vehicle,_toSpawnArray] execVM "scripts\scrapper\spawnParts.sqf"; //executing spawn script with parts array for dynamic part spawning! that script is where we will add some special edits and spawns
+[_vehicle,_toSpawnArray] call compile preprocessFileLineNumbers "scripts\scrapper\weapon_Parts.sqf"; //executing spawn script with parts array for dynamic part spawning! that script is where we will add some special edits and spawns

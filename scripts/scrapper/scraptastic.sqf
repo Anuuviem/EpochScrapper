@@ -1,7 +1,8 @@
-private["_vehicle","_type","_objectID","_objectUID","_chopShopClasses","_maxDistance","_toolBreak","_num","_isOk","_proceed","_limit","_counter"];
+private["_type","_objectID","_objectUID","_chopShopClasses","_maxDistance","_toolBreak","_num","_isOk","_proceed","_limit","_counter"];
   
 _vehicle = _this select 3;
 _type = typeOf _vehicle;
+_vehName = getText(configFile >> "cfgVehicles" >> _type >> "displayName");
 
 _objectID = _vehicle getVariable["ObjectID","0"];
 _objectUID = _vehicle getVariable["ObjectUID","0"];
@@ -96,7 +97,7 @@ while {_isOk} do {
   ["Working",0,[20,48,15,0]] call dayz_NutritionSystem;
   player playActionNow "Medic";
   
-  cutText [format["Scrapping of %1 in progress, stage %2 of %3",_type,(_counter + 1),_limit], "PLAIN DOWN"];
+  cutText [format["Scrapping of %1 in progress, stage %2 of %3",_vehName,(_counter + 1),_limit], "PLAIN DOWN"];
   
   _dis=20;
   _sfx = "repair";
@@ -109,11 +110,14 @@ while {_isOk} do {
   _finished = false;
   DZE_cancelBuilding = false;
 
-  if ((count (crew _vehicle)) != 0) exitWith {systemChat("You can't scrap a vehicle while it is occupied!");_isOk = false;};
+  if ((count (crew _vehicle)) != 0) exitWith {systemChat("You can't scrap a vehicle while it is occupied!");DZE_cancelBuilding = true;};
   
   while {r_doLoop} do {
     _animState = animationState player;
     _isMedic = ["medic",_animState] call fnc_inString;
+    
+    if ((count (crew _vehicle)) != 0) exitWith {systemChat("You can't scrap a vehicle while it is occupied!");DZE_cancelBuilding = true;};
+    
     if (_isMedic) then {
         _started = true;
     };
@@ -123,16 +127,14 @@ while {_isOk} do {
     };
     if (r_interrupt || (player getVariable["inCombat",false])) exitWith {
         r_doLoop = false;
-        _isOk = false;
     };
     if (DZE_cancelBuilding) exitWith {
       r_doLoop = false;
-      _isOk = false;
     };
     sleep 0.1;
   };
   r_doLoop = false;
-  
+    
   if(!_finished) exitWith {
     _isOk = false;
     _proceed = false;
@@ -152,6 +154,7 @@ while {_isOk} do {
 if (_proceed) then {
   _chance = random 100;
   if (_chance >= 40) then {
+    //_vehicle call compile preprocessFileLineNumbers "scripts\scrapper\parts_vehicle.sqf";
     _vehicle call compile preprocessFileLineNumbers "scripts\scrapper\parts_vehicle.sqf";
     call _fn_del_vehicle;
     systemChat("Successfully scrapped vehicle, usable parts are in that crate!");
@@ -166,7 +169,7 @@ if (_proceed) then {
   _crowBar = "ItemCrowbar";
     if ( _chance > 5) then {
       player removeWeapon _toolBox;
-      systemChat("You broke too many tools from your toolbox getting this job done!");
+      systemChat("You lost too many tools from your toolbox getting this job done!");
     } else {
       player removeWeapon _crowBar;
       systemChat("You broke your crowbar getting this job done!");

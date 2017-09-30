@@ -3,6 +3,8 @@ private["_vehicle","_type","_partsArray","_player","_dir","_pos","_spawnCrate","
 _vehicle = _this select 0;
 _type = typeOf _vehicle;
 _partsArray = _this select 1;
+_wepsArray = _this select 2;
+_bagsArray = _this select 3;
 
 _player = player;
 
@@ -36,6 +38,9 @@ if (_type == "c130J_US_EP1_DZ") then {
 };
 
 _parts = count _partsArray;
-_first = 0;
+_weps = count _wepsArray;
+_bags = count _bagsArray;
 
-for "_i" from 0 to _parts do { _spawncrate addMagazineCargoGlobal [(_partsArray select _first),1]; _first = _first + 1; }; //incomplete, need to figure out how to do this code foreach item in _partsArray
+for "_i" from 0 to _parts do { _spawncrate addMagazineCargoGlobal [(_partsArray select _i),1];/* _first = _first + 1; */};
+for "_o" from 0 to _weps do { _spawncrate addWeaponCargoGlobal [(_wepsArray select _o),1];};
+for "_u" from 0 to _bags do { _spawncrate addBackpackCargoGlobal [(_bagsArray select _u),1];};
