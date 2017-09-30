@@ -107,6 +107,7 @@ while {_isOk} do {
   r_doLoop = true;
   _started = false;
   _finished = false;
+  DZE_cancelBuilding = false;
 
   if ((count (crew _vehicle)) != 0) exitWith {systemChat("You can't scrap a vehicle while it is occupied!");_isOk = false;};
   
