@@ -1,5 +1,8 @@
 private["_type","_objectID","_objectUID","_chopShopClasses","_maxDistance","_toolBreak","_num","_isOk","_proceed","_limit","_counter"];
-  
+
+if (dayz_actionInProgress) exitWith {localize "STR_EPOCH_PLAYER_21" call dayz_rollingMessages;};
+dayz_actionInProgress = true;
+
 _vehicle = _this select 3;
 _type = typeOf _vehicle;
 _vehName = getText(configFile >> "cfgVehicles" >> _type >> "displayName");
@@ -71,20 +74,6 @@ if (_num == 3) then {
   if (_type == "c130J_US_EP1_DZ") then {
     _num = 15;
   };
-  /*if (_vehicle isKindOf _kind) then { //the future, gotta figure out how to work this one, rough sketch here on what I want to do
-    switch (_kind) do {                 //know i need to a configFile >> parentClasses or something like that and have that be the switch
-      case "Car":           {_num = 5};
-      case "Motorcycle":    {_num = 3};
-      case "Bicycle":       {_num = 2};
-      case "Truck":         {_num = 6};
-      case "WheeledAPC":    {_num = 7};
-      case "Tank":          {_num = 9};
-      case "TrackedAPC":    {_num = 8};
-      case "Helicopter":    {_num = 10};
-      case "Plane":         {_num = 12};
-      case default:         {_num = 3};
-    };
-  };*/
 };
 
 _isOk = true;

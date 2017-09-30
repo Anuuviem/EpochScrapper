@@ -49,7 +49,7 @@ if !(isNil "_hitpoints") then { //verifies we have initialized a vehicle, then r
 {
 	_hitpoint = _x;
 	_damage = [_vehicle,_x] call object_getHit;
-  _damVar = round(ceil(_damage *100)); //converts damage into a whole integer since damage works 0 = destroyed, 1 = perfect, damage is handled as subnumber 0.123 will now be  12% damage
+  _damVar = round(ceil(_damage * 100)); //converts damage into a whole integer since damage works 0 = destroyed, 1 = perfect, damage is handled as subnumber 0.123 will now be  12% damage
   _chance = round(100 - (_damVar / 2)); //chance to spawn part with damage reflected as a negative factor
   _against = (round((random 25) + _damVar)); //the roll against the part for it to not spawn. chance has to be greater than this to spawn. if part has suffered 75% damage IT WILL NOT have a chance and will instead turn into scrap
 
