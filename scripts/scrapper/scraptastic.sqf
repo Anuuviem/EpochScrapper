@@ -1,6 +1,6 @@
 private["_type","_objectID","_objectUID","_chopShopClasses","_maxDistance","_toolBreak","_num","_isOk","_proceed","_limit","_counter"];
 
-if (dayz_actionInProgress) exitWith {localize "STR_EPOCH_PLAYER_21" call dayz_rollingMessages;};
+if (dayz_actionInProgress) exitWith {localize "str_player_actionslimit" call dayz_rollingMessages;};
 dayz_actionInProgress = true;
 
 _vehicle = _this select 3;
@@ -36,8 +36,6 @@ _fn_dmg_veh = {
     PVDZ_veh_Save = [_vehicle,"damage"];
     publicVariableServer "PVDZ_veh_Save";
 };
-
-if (dayz_actionInProgress) exitWith {localize "str_player_actionslimit" call dayz_rollingMessages;};
 
 if !(count _chopShops > 0) exitWith {systemChat("You scrap a whole vehicle out in the open, get to a Chop Shop!");};
 
