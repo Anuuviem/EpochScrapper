@@ -37,8 +37,6 @@ _fn_dmg_veh = {
     publicVariableServer "PVDZ_veh_Save";
 };
 
-if (dayz_actionInProgress) exitWith {localize "str_player_actionslimit" call dayz_rollingMessages;};
-
 if !(count _chopShops > 0) exitWith {systemChat("You scrap a whole vehicle out in the open, get to a Chop Shop!");};
 
 if ((count (crew _vehicle)) != 0) exitWith {systemChat("You can't scrap a vehicle while it is occupied!");};
