@@ -92,7 +92,7 @@ if ((_countMTur != 0) || (_countSTur != 0) || (_countBTur != 0) || (_countRTur !
   _countConvert = count _convertArray;
   for "_i" from 0 to (_countConvert - 1) do {
     _chance = round(100 - ((random 100) / 2));
-    _against = ((round(random 25)) + ((random 100) / (random 5)));
+    _against = round((random 25) + ((random 100) / (random 5)));
     if (_chance > _against) then {
     _convPart = _convertArray select _i;
       switch (_convPart) do {
